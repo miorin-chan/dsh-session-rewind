@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "Annuler l’envoi",
+    "title": "Annuler l’envoi de messages en attente",
     "description": "Utilisez la flèche sous un message en attente pour le retirer avant que l’agent le prenne en charge."
   }
 }

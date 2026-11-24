@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "Senden rückgängig machen",
+    "title": "Ausstehende Nachrichten zurückziehen",
     "description": "Ziehe eine ausstehende Nachricht mit dem Pfeil unter der Nachricht zurück, bevor der Agent sie übernimmt."
   }
 }

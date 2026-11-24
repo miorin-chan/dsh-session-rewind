@@ -1,5 +1,4 @@
-# Activates the bundle. The Host half is inert; the Client half ships through
-# package.json `dsh.client` and carries Undo unsent.
+# The Client half registered by the bundle owns pending-message cancellation.
 - insert:
     - id: dsh-undo-unsent
       name: '@miorin/dsh-undo-unsent'

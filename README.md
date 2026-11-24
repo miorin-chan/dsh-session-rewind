@@ -1,4 +1,4 @@
-# Undo unsent
+# Cancel pending messages
 
 [简体中文](README.zh.md)
 
