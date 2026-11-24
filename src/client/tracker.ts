@@ -86,7 +86,7 @@ export function trackSession(ctx: Context, binding: SessionBinding, lifetime: Ab
     }
   }
 
-  async function undo(target: DirectSend, canRemove: boolean, messages: { undone: string; restored: string; unavailable: string }) {
+  async function undo(target: DirectSend, canRemove: boolean, messages: { undone: string; unavailable: string }) {
     refresh()
     if (attempt !== target || target.clicked || lifetime.aborted) return
     target.clicked = true
@@ -97,8 +97,8 @@ export function trackSession(ctx: Context, binding: SessionBinding, lifetime: Ab
         if (reference.binding !== binding) return
         const { restored, removed } = await restoreAndWithdraw(target, canRemove)
         if (lifetime.aborted) return
-        const notice = removed ? messages.undone : messages.restored
-        input.notify(restored ? 'info' : 'error', restored ? notice : messages.unavailable)
+        if (!restored) input.notify('error', messages.unavailable)
+        else if (removed) input.notify('info', messages.undone)
       })
     } catch {
       if (!lifetime.aborted && ctx.sessions.binding(binding.sessionId) === binding) input.notify('error', messages.unavailable)

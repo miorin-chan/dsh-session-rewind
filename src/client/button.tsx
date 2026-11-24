@@ -32,7 +32,7 @@ function UndoButton({ tracker, attempt, t, canRemove, className, row }: Locale &
     <button type="button" className={className} aria-label={t('undo')}
       data-dsh-undo-message={row || undefined} data-dsh-undo-direct={!row || undefined}
       onClick={() => { void tracker.undo(attempt, canRemove, {
-        undone: t('undone'), restored: t('restored'), unavailable: t('unavailable'),
+        undone: t('undone'), unavailable: t('unavailable'),
       }) }}>
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7"
         strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

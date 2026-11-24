@@ -14,7 +14,7 @@ try {
 }
 
 const plugin = registration.factory(() => ({}))
-const messages = { undone: 'undone', restored: 'restored', unavailable: 'unavailable' }
+const messages = { undone: 'undone', unavailable: 'unavailable' }
 
 function store(value) {
   const listeners = new Set()
@@ -141,7 +141,7 @@ test('undo uses the exact Inbox occurrence, and restores once even if removal fa
   await Promise.all([f.tracker.undo(target, true, messages), f.tracker.undo(target, true, messages)])
   assert.deepEqual(f.removals, [['matching', { kind: 'remove' }]])
   assert.equal(f.input.getSnapshot().draft, 'new draft\n\nsent text')
-  assert.deepEqual(f.notices, [['info', 'restored']])
+  assert.deepEqual(f.notices, [])
   f.dispose()
 })
 
@@ -167,7 +167,7 @@ test('a click before acceptance waits for the editor and preserves a rejected dr
   await undo
   assert.equal(f.input.getSnapshot().draft, 'sent text')
   assert.deepEqual(f.removals, [])
-  assert.deepEqual(f.notices, [['info', 'restored']])
+  assert.deepEqual(f.notices, [])
   f.state.set({ running: true, pendingSubmissions: [] })
   f.input.set({ ...original, phase: 'sending' })
   assert.equal(f.tracker.active(), undefined)
