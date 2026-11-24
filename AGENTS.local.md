@@ -14,7 +14,7 @@ Check whether new behavior belongs in its own bundle.
 
 - `README.md` is for users: installation, usage, commands, and limits.
   Provide `README.zh.md` as its Chinese version.
-- `DESIGN.md` records the design, domain semantics, and invariants.
+- [DESIGN.md](DESIGN.md) defines the product behavior, withdrawal window, and draft-restoration rules.
   Keep implementation status, schedules, and debugging notes out of it.
 - `CHANGELOG.md` records changes for developers.
 - Keep design records, proposals, and verification evidence under `docs/`, with `docs/README.md` as the index.
