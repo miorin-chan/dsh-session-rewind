@@ -1,6 +1,6 @@
 {
   "meta": {
     "title": "En boca cerrada",
-    "description": "Recupera en el borrador el texto de un mensaje que acabas de enviar mientras esperas la respuesta."
+    "description": "Rebobina una conversación hasta un mensaje anterior y devuélvelo al cuadro de entrada."
   }
 }

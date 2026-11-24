@@ -14,8 +14,6 @@ Check whether new behavior belongs in its own bundle.
 
 - `README.md` is for users: installation, usage, commands, and limits.
   Provide `README.zh.md` as its Chinese version.
-- [DESIGN.md](DESIGN.md) defines the product behavior, withdrawal window, and draft-restoration rules.
-  Keep implementation status, schedules, and debugging notes out of it.
 - `CHANGELOG.md` records changes for developers.
 - Keep design records, proposals, and verification evidence under `docs/`, with `docs/README.md` as the index.
 - Keep the plugin detail page short.
@@ -43,9 +41,7 @@ Check whether new behavior belongs in its own bundle.
   The build generates `client.js` and `index.js` from the TypeScript entries.
   Git ignores the generated files.
   Include the runtime files in the npm package.
-- Keep Plugin Manager metadata in `locale/*.json` and runtime translations in [labels.ts](src/client/labels.ts).
-- [button.tsx](src/client/button.tsx) owns button placement.
-  [tracker.ts](src/client/tracker.ts) tracks each direct send and restores its draft.
+- Keep Plugin Manager metadata in `locale/*.json`.
 - Node.js 22.18 or newer runs the `.test.mts` files directly.
   The client test uses a fake `ctx` to check registration, resources, and cleanup.
 - `docs/scripts/reflow` is the standalone documentation formatter and requires Python 3.11 or newer.

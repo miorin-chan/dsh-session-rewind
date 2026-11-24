@@ -1,6 +1,6 @@
 {
   "meta": {
     "title": "Nem dito nem feito",
-    "description": "Recupere no rascunho o texto de uma mensagem enviada diretamente enquanto aguarda a resposta."
+    "description": "Retroceda uma conversa até uma mensagem anterior e devolva o texto ao campo de entrada."
   }
 }

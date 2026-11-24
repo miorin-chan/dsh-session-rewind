@@ -3,13 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "license": "MIT",
-  "description": "Return a directly sent message to the draft while awaiting a reply.",
+  "description": "Rewind a conversation to an earlier user message and return it to the composer.",
   "type": "module",
   "keywords": [
     "deepseek-harness",
     "dsh",
     "dsh-plugin",
-    "undo-send"
+    "rewind"
   ],
   "exports": {
     ".": "./index.js",
@@ -26,7 +26,6 @@
     "README.md",
     "AGENTS.md",
     "AGENTS.local.md",
-    "DESIGN.md",
     "docs/README.md",
     "README.zh.md"
   ],
@@ -40,13 +39,7 @@
     "client": {
       "platform": "web",
       "immediately": true,
-      "inject": [
-        "@deepseek-ai/dsh-client-ui-slots",
-        "@deepseek-ai/dsh-client-locale",
-        "@deepseek-ai/dsh-api-session-controller",
-        "@deepseek-ai/dsh-client-ui-conversation",
-        "@deepseek-ai/dsh-client-ui-chat"
-      ]
+      "inject": []
     }
   },
   "scripts": {

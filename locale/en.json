@@ -1,6 +1,6 @@
 {
   "meta": {
     "title": "Left Unsaid",
-    "description": "Return a directly sent message to the draft while waiting for the assistant’s reply."
+    "description": "Rewind a conversation to an earlier user message and return it to the composer."
   }
 }
