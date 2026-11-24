@@ -281,7 +281,7 @@ function userNode({ turn, seq, content }) {
 }
 
 test('client plugin registers expected slots, selects only user rows, preserves 8-locale parity/branding, and uses rewind glyph', () => {
-  assert.equal(registration.id, '@miorin/dsh-undo-unsent')
+  assert.equal(registration.id, '@miorin/dsh-session-rewind')
   assert.deepEqual(plugin.inject, [
     'slots',
     'locale',
@@ -428,10 +428,10 @@ test('Turn > 1 happy path forks cleanly, restores text+multimedia, clears inbox,
       }
     },
     async fetchImpl(url) {
-      if (url.includes('/api/dsh-undo-unsent/prepare')) {
+      if (url.includes('/api/dsh-session-rewind/prepare')) {
         return Response.json({ boundary: { kind: 'fork', atSeq: 8 }, activity: [] })
       }
-      if (url.includes('/api/dsh-undo-unsent/file')) {
+      if (url.includes('/api/dsh-session-rewind/file')) {
         assert.match(url, /sessionId=s-1/)
         assert.match(url, /seq=10/)
         assert.match(url, /index=2/)

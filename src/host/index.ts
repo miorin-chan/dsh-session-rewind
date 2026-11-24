@@ -35,5 +35,5 @@ export function apply(ctx: Context): void {
       offFile()
       offPrepare()
     }
-  }, 'dsh-undo-unsent: host rewind routes')
+  }, 'dsh-session-rewind: host rewind routes')
 }

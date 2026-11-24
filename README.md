@@ -9,7 +9,7 @@ Rewind runs immediately when idle or when only a turn is running; if subagents, 
 or scheduled reminders are active, a confirmation dialog lists them before branching.
 See [the design specification](DESIGN.md) for exact rules and edge cases.
 
-Supports DeepSeek Harness 0.2.2-rc.5.
+`@miorin/dsh-session-rewind` supports DeepSeek Harness 0.2.2-rc.5.
 To install from source, run `npm ci` in the checkout, then select the checkout in **Plugins** > **Add plugin**.
 
 [Project documentation](docs/README.md)

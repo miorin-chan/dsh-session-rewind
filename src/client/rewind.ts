@@ -23,8 +23,8 @@ declare module '@deepseek-ai/dsh-api-session-controller/client' {
   }
 }
 
-export const PREPARE_PATH = '/api/dsh-undo-unsent/prepare'
-export const FILE_PATH = '/api/dsh-undo-unsent/file'
+export const PREPARE_PATH = '/api/dsh-session-rewind/prepare'
+export const FILE_PATH = '/api/dsh-session-rewind/file'
 
 const MAX_LOAD_OLDER_STEPS = 200
 const PREPARE_TIMEOUT_MS = 15_000

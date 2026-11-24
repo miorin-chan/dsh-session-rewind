@@ -3,8 +3,8 @@ import type { SessionEvent, SessionId } from '@deepseek-ai/dsh-session'
 import type { SessionObservation, SessionObservationOptions } from '@deepseek-ai/dsh-session-query'
 import type { SessionActivity } from '@deepseek-ai/dsh-workspace'
 
-export const PREPARE_PATH = '/api/dsh-undo-unsent/prepare'
-export const FILE_PATH = '/api/dsh-undo-unsent/file'
+export const PREPARE_PATH = '/api/dsh-session-rewind/prepare'
+export const FILE_PATH = '/api/dsh-session-rewind/file'
 
 const NO_STORE_HEADERS = { 'Cache-Control': 'private, no-store' } as const
 const FILE_HEADERS = {

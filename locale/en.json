@@ -1,6 +1,6 @@
 {
   "meta": {
     "title": "Left Unsaid",
-    "description": "Rewind a conversation to an earlier user message and return it to the composer."
+    "description": "Rewind to an earlier message, restore its text and attachments to the composer, and archive the original conversation."
   }
 }

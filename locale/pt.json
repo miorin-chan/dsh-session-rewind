@@ -1,6 +1,6 @@
 {
   "meta": {
     "title": "Nem dito nem feito",
-    "description": "Retroceda uma conversa até uma mensagem anterior e devolva o texto ao campo de entrada."
+    "description": "Retroceda a conversa até uma mensagem anterior, restaure seu texto e seus anexos no campo de entrada e arquive a conversa original."
   }
 }

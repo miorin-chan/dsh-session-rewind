@@ -1,4 +1,4 @@
-export const namespace = 'dsh-undo-unsent'
+export const namespace = 'dsh-session-rewind'
 
 const en = {
   rewind: 'Rewind',

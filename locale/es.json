@@ -1,6 +1,6 @@
 {
   "meta": {
     "title": "En boca cerrada",
-    "description": "Rebobina una conversación hasta un mensaje anterior y devuélvelo al cuadro de entrada."
+    "description": "Rebobina la conversación hasta un mensaje anterior, recupera su texto y sus archivos adjuntos en el cuadro de escritura y archiva la conversación original."
   }
 }

@@ -1,4 +1,4 @@
 # The Client half contributes conversation rewind.
 - insert:
-    - id: dsh-undo-unsent
-      name: '@miorin/dsh-undo-unsent'
+    - id: dsh-session-rewind
+      name: '@miorin/dsh-session-rewind'

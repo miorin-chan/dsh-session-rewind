@@ -7,7 +7,7 @@
 会话空闲或仅有当前回合运行时直接执行；仅当存在运行中的子智能体、后台任务或定时提醒时，才会在创建新会话前弹出确认框。
 具体边界规则与多媒体恢复机制见[设计文档](DESIGN.md)。
 
-支持 DeepSeek Harness 0.2.2-rc.5。
+`@miorin/dsh-session-rewind` 支持 DeepSeek Harness 0.2.2-rc.5。
 在源码目录执行 `npm ci` 完成构建后，从 **插件** > **添加插件** 选择该目录。
 
 [项目文档](docs/README.md)

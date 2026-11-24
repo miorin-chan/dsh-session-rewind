@@ -5,7 +5,7 @@
 ## 架构概览
 
 - **Host 侧（`src/host/index.ts`、`src/lib/rewind-host.ts`）**：注入 `connection`、`attachments` 与 `sessionQuery`，
-  通过 `ctx.connection.fetch` 暴露受鉴权只读路由 `/api/dsh-undo-unsent/prepare` 与 `/api/dsh-undo-unsent/file`，
+  通过 `ctx.connection.fetch` 暴露受鉴权只读路由 `/api/dsh-session-rewind/prepare` 与 `/api/dsh-session-rewind/file`，
   用于计算精确分叉边界、查询 `workspace/session-activity`，
   并在校验消息归属与索引后通过 `ctx.attachments.readFileStream` 流式读取普通文件附件。
 - **Client 侧（`src/client/`）**：
@@ -20,7 +20,7 @@
 - `npm test`：构建 `index.js`、`client.js`、`lib/rewind-host.js` 与工具脚本，
   并运行 `test/host.test.mts` 和 `test/client.test.mts` 全部单元测试。
 - `npm run check`：校验工具脚本构建、单元测试、TypeScript 类型、本地构建产物与 DSH 类型同步。
-- 工作区根目录下 `node tools/new-dsh-plugin/cli.mts --check plugins/dsh-undo-unsent`：
+- 工作区根目录下 `node tools/new-dsh-plugin/cli.mts --check plugins/dsh-session-rewind`：
   校验清单、本地化字典与插件骨架完整性。
 
 ## 验证记录

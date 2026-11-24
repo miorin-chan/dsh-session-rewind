@@ -25,7 +25,7 @@ export const overlaySlot = 'shell.overlay'
 
 declare module '@deepseek-ai/dsh-client-ui-slots' {
   interface LocaleNamespaceMap {
-    'dsh-undo-unsent': LabelKey
+    'dsh-session-rewind': LabelKey
   }
 }
 

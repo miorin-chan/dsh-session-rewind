@@ -152,7 +152,7 @@ function parseActivityList(value: unknown): readonly SessionActivity[] | undefin
   return out
 }
 
-/** Validate and narrow JSON returned by `/api/dsh-undo-unsent/prepare`. */
+/** Validate and narrow JSON returned by `/api/dsh-session-rewind/prepare`. */
 export function parsePrepareResponse(value: unknown): RewindPrepareResponse | undefined {
   if (!isRecord(value) || !isRecord(value.boundary)) return undefined
   let boundary: RewindBoundary | undefined
