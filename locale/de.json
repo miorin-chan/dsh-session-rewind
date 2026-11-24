@@ -1,6 +1,6 @@
 {
   "meta": {
     "title": "Schweigen ist Gold",
-    "description": "Ziehe eine ausstehende Nachricht mit dem Pfeil unter der Nachricht zurück, bevor der Agent sie übernimmt."
+    "description": "Hole den Text einer direkt gesendeten Nachricht zurück in den Entwurf, solange die Antwort aussteht."
   }
 }

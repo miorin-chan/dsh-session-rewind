@@ -44,8 +44,8 @@ Check whether new behavior belongs in its own bundle.
   Git ignores the generated files.
   Include the runtime files in the npm package.
 - Keep Plugin Manager metadata in `locale/*.json` and runtime translations in [labels.ts](src/client/labels.ts).
-- [dock.tsx](src/client/dock.tsx) owns the queue interaction
-  and [rows.ts](src/client/rows.ts) adapts the Inbox projection.
+- [button.tsx](src/client/button.tsx) owns button placement.
+  [tracker.ts](src/client/tracker.ts) tracks each direct send and restores its draft.
 - Node.js 22.18 or newer runs the `.test.mts` files directly.
   The client test uses a fake `ctx` to check registration, resources, and cleanup.
 - `docs/scripts/reflow` is the standalone documentation formatter and requires Python 3.11 or newer.

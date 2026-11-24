@@ -1,6 +1,6 @@
 {
   "meta": {
     "title": "En boca cerrada",
-    "description": "Usa la flecha debajo de un mensaje pendiente para retirarlo antes de que el agente lo reciba."
+    "description": "Recupera en el borrador el texto de un mensaje que acabas de enviar mientras esperas la respuesta."
   }
 }

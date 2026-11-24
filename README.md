@@ -2,13 +2,12 @@
 
 [简体中文](README.zh.md)
 
-Click the undo arrow under a pending message above the composer to withdraw it.
-The arrow stays in view with the message while it waits in the agent’s queue.
-When the agent takes the message, the arrow disappears.
+After you send a message directly, click the undo arrow beside Copy while waiting for the assistant's reply.
+The arrow first appears by the composer while the message is being sent.
 
-A successful undo removes the message from the queue.
-Queue editing and steering remain available.
-After a keyboard undo, focus goes to another undo button or returns to the composer when the queue is empty.
+Undo returns the message text to the draft.
+If you have already started writing, it puts the returned text after one blank line.
+If the agent has already taken the message, it may continue responding.
 
 Supports DeepSeek Harness 0.2.2-rc.5.
 To install from source, run `npm ci` in the checkout, then select the checkout in **Plugins** > **Add plugin**.

@@ -1,4 +1,4 @@
-# The Client half registered by the bundle owns pending-message cancellation.
+# The Client half contributes undo for direct sends.
 - insert:
     - id: dsh-undo-unsent
       name: '@miorin/dsh-undo-unsent'

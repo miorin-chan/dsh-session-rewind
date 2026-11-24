@@ -1,106 +1,175 @@
 import assert from 'node:assert/strict'
-import { createRequire } from 'node:module'
 import test from 'node:test'
-import { pendingRows, rowKey } from '../src/client/rows.ts'
 
-const requireModule = createRequire(import.meta.url)
 const namespace = 'dsh-undo-unsent'
+const composerSlot = 'conversation.input.right'
+const rowSlot = 'conversation.chat.user.before'
+let registration
 
-await test('loaded artifact registers the queue slot and disposes it on unload', async () => {
-  let registration
-  globalThis.window = { __ModuleLoader__: { load: entry => { registration = entry } } }
-  try {
-    await import('../client.js')
-  } finally {
-    delete globalThis.window
+globalThis.window = { __ModuleLoader__: { load: entry => { registration = entry } } }
+try {
+  await import('../client.js')
+} finally {
+  delete globalThis.window
+}
+
+const plugin = registration.factory(() => ({}))
+const messages = { undone: 'undone', restored: 'restored', unavailable: 'unavailable' }
+
+function store(value) {
+  const listeners = new Set()
+  return {
+    getSnapshot: () => value,
+    subscribe: listener => {
+      listeners.add(listener)
+      return () => listeners.delete(listener)
+    },
+    set(next) {
+      value = next
+      for (const listener of [...listeners]) listener()
+    },
   }
-  assert.equal(registration.id, '@miorin/dsh-undo-unsent')
-  const plugin = registration.factory(requireModule)
-  assert.deepEqual(plugin.inject, ['slots', 'locale', 'sessions', 'conversation', 'uiConversation'])
+}
 
-  const installed = new Map()
+function fixture(remove = async () => ({ ok: true })) {
+  const registrations = new Map()
   const effects = []
-  const sessions = { binding: () => undefined, scope: () => undefined }
+  const notices = []
+  const removals = []
+  const input = store({ phase: 'plain', draft: 'sent text', draftRev: 1 })
+  const state = store({ running: false, pendingSubmissions: [] })
+  const inbox = store(undefined)
+  const turns = new Map()
+  const nodes = []
+  const steps = store([])
+  const chat = store({
+    timeline: { turnOrder: [1], turns },
+    nodes: { values: () => nodes, turnDataSource: () => steps },
+  })
+  const binding = { sessionId: 'session-A', session: {
+    ...state, projections: { faceOf: () => inbox }, updateQueue: (id, action) => {
+      removals.push([id, action])
+      return remove()
+    },
+  } }
   plugin.apply({
     effect: install => effects.push(install()),
     slots: {
-      inject: (slot, install) => {
-        assert.equal(slot, 'conversation.input.dock')
-        return install()
-      },
+      inject: (_name, install) => install(),
       register: (options, component) => {
-        installed.set(options.id, { options, component })
-        return () => installed.delete(options.id)
+        registrations.set(options.name, { options, component })
+        return () => registrations.delete(options.name)
       },
     },
     locale: {
       register: (name, labels) => {
-        installed.set(name, labels)
-        return () => installed.delete(name)
+        registrations.set(name, labels)
+        return () => registrations.delete(name)
       },
-      bind: key => () => key,
     },
-    sessions,
+    sessions: {
+      binding: id => id === binding.sessionId ? binding : undefined,
+      using: async (id, _options, use) => {
+        assert.equal(id, binding.sessionId)
+        return use({ binding })
+      },
+    },
+    conversation: { input: {
+      for: () => ({ state: input, notify: (level, text) => notices.push([level, text]) }),
+      requestDraftInitialization(target, options) {
+        assert.equal(target, binding)
+        assert.equal(options.whenDraftExists, 'append')
+        const snapshot = input.getSnapshot()
+        const draft = snapshot.draft === '' ? options.prompt : `${snapshot.draft}\n${options.prompt}`
+        input.set({ ...snapshot, draft, draftRev: snapshot.draftRev + 1 })
+        return 'applied'
+      },
+    } },
+    uiConversation: { binding: () => ({ target: () => chat }) },
   })
+  const tracker = registrations.get(composerSlot).options.inject(binding.sessionId).tracker
+  const unwatch = tracker.watch()
+  function accept() {
+    state.set({ running: true, pendingSubmissions: [{ requestId: 'request-A', placement: 'transcript' }] })
+    input.set({ phase: 'plain', draft: '', draftRev: 2 })
+  }
+  return { registrations, binding, tracker, input, state, inbox, turns, nodes, steps, chat, notices, removals, accept,
+    dispose: () => { unwatch(); effects.reverse().forEach(dispose => dispose()) } }
+}
 
-  const { options, component } = installed.get('queue')
-  assert.equal(options.order, 20)
-  assert.equal(options.priority, -1)
-  assert.equal(options.locale, namespace)
-  assert.equal(typeof component, 'function')
-  assert.equal(Object.keys(installed.get(namespace)).length, 8)
-
-  const actions = options.inject('session-A')
-  assert.equal(actions.getSession(), undefined)
-  const scoped = { updateQueue() {} }
-  sessions.binding = sessionId => sessionId === 'session-A' ? { session: scoped } : undefined
-  assert.equal(actions.getSession(), scoped)
-  assert.equal(options.inject('session-B').getSession(), undefined)
-
-  effects.reverse().forEach(dispose => dispose())
-  assert.equal(installed.size, 0)
+test('contributes undo through the composer and message decoration without shadowing the queue', () => {
+  const f = fixture()
+  assert.deepEqual(plugin.inject, ['slots', 'locale', 'sessions', 'conversation', 'uiConversation'])
+  assert.equal(registration.id, '@miorin/dsh-undo-unsent')
+  assert.deepEqual([...f.registrations.keys()], [namespace, composerSlot, rowSlot])
+  const { options } = f.registrations.get(rowSlot)
+  assert.equal(Object.keys(f.registrations.get(namespace)).length, 8)
+  assert.equal(options.inject(f.binding.sessionId).tracker, f.tracker)
+  assert.deepEqual(options.inject('other-session'), {})
+  assert.equal(options.select({ kind: 'user', source: { rpcId: 'request-A' } }), 'request-A')
+  assert.equal(options.select({ kind: 'steering', source: { rpcId: 'request-A' } }), null)
+  assert.equal(options.select({ kind: 'user', source: { rpcId: 42 } }), null)
+  f.dispose()
+  assert.equal(f.registrations.size, 0)
 })
 
-const queued = (id, content, source = { kind: 'user' }) => ({ id, role: 'user', content, source })
-const echo = (requestId, placement = 'queued') => ({ requestId, placement, time: 0, text: 'sending', attachments: [] })
-
-await test('groups current messages by their host occurrence and avoids duplicate queue echoes', () => {
-  const result = pendingRows({
-    'next-turn': [queued('queued-1', [{ type: 'text', text: 'first' }], { kind: 'user', rpcId: 'r1' })],
-    'next-step': [queued('steer-1', [{ type: 'text', text: 'second' }]), queued('internal', [], { kind: 'injection' })],
-  }, [echo('r1'), echo('r2'), echo('r3', 'steering')])
-  assert.deepEqual(result.map(rowKey), ['request:r1', 'message:steer-1', 'request:r2'])
-  assert.deepEqual(result.map(row => [row.kind, row.id, row.target, row.content.text, row.editable]), [
-    ['queued', 'queued-1', 'next-turn', 'first', true],
-    ['queued', 'steer-1', 'next-step', 'second', false],
-    ['sending', undefined, undefined, 'sending', undefined],
-  ])
+test('only visible text in the matching reply closes the direct-send window', () => {
+  const f = fixture()
+  f.input.set({ ...f.input.getSnapshot(), phase: 'sending' })
+  assert.equal(f.tracker.active().draft, 'sent text')
+  f.accept()
+  f.turns.set(1, { status: 'closed' })
+  f.nodes.push({ kind: 'user', location: { kind: 'turn', turn: { turn: 2 } }, data: { source: { rpcId: 'request-A' } } })
+  f.chat.set(f.chat.getSnapshot())
+  f.steps.set([{ blocks: [{ kind: 'reasoning', text: 'working' }] }])
+  assert.equal(f.tracker.active().requestId, 'request-A')
+  f.steps.set([{ blocks: [{ kind: 'text', text: 'reply' }] }])
+  assert.equal(f.tracker.active(), undefined)
+  f.dispose()
 })
 
-await test('preserves attachment order and prevents text edits on mixed content', () => {
-  const reference = { attachmentId: 'photo', bytes: 2, mediaType: 'image/png', width: 1, height: 1 }
-  const file = { attachmentId: 'report', name: 'report.txt', bytes: 4 }
-  const [row] = pendingRows({
-    'next-turn': [queued('with-files', [
-      { type: 'image', attachment: reference }, { type: 'text', text: 'line one\nline two' },
-      { type: 'file', attachment: file },
-    ])],
-    'next-step': [],
-  }, [])
-  assert.equal(row.editable, false)
-  assert.deepEqual(row.content, {
-    text: 'line one\nline two', attachments: [{ type: 'image', image: { attachment: reference } }, { type: 'file', file }],
-    extraBlocks: [],
-  })
+test('undo uses the exact Inbox occurrence, and restores once even if removal fails', async () => {
+  const f = fixture(async () => ({ ok: false }))
+  f.input.set({ ...f.input.getSnapshot(), phase: 'sending' })
+  f.accept()
+  f.input.set({ phase: 'plain', draft: 'new draft', draftRev: 3 })
+  f.inbox.set({ 'next-turn': [
+    { id: 'unrelated', role: 'user', source: { rpcId: 'request-B' } },
+    { id: 'matching', role: 'user', source: { rpcId: 'request-A' } },
+  ] })
+  const target = f.tracker.active()
+  await Promise.all([f.tracker.undo(target, true, messages), f.tracker.undo(target, true, messages)])
+  assert.deepEqual(f.removals, [['matching', { kind: 'remove' }]])
+  assert.equal(f.input.getSnapshot().draft, 'new draft\n\nsent text')
+  assert.deepEqual(f.notices, [['info', 'restored']])
+  f.dispose()
 })
 
-await test('withholds withdrawal identity for local echoes and rejects malformed inbox rows', () => {
-  const broken = pendingRows({
-    'next-turn': [{ id: 42, role: 'user', content: [], source: { kind: 'user' } }, { id: 'unknown', role: 'assistant' }],
-    'next-step': [null, queued('', [])],
-  }, [echo('local-only')])
-  assert.equal(broken.length, 1)
-  assert.equal(broken[0].kind, 'sending')
-  assert.equal('id' in broken[0], false)
-  assert.deepEqual(pendingRows(undefined, [echo('transcript', 'transcript')]), [])
+test('an early click withdraws the matching occurrence once it becomes available', async () => {
+  const f = fixture()
+  f.input.set({ ...f.input.getSnapshot(), phase: 'sending' })
+  const undo = f.tracker.undo(f.tracker.active(), true, messages)
+  f.inbox.set({ 'next-turn': [{ id: 'matching', role: 'user', source: { rpcId: 'request-A' } }] })
+  f.accept()
+  await undo
+  assert.deepEqual(f.removals, [['matching', { kind: 'remove' }]])
+  assert.equal(f.input.getSnapshot().draft, 'sent text')
+  assert.deepEqual(f.notices, [['info', 'undone']])
+  f.dispose()
+})
+
+test('a click before acceptance waits for the editor and preserves a rejected draft', async () => {
+  const f = fixture()
+  const original = f.input.getSnapshot()
+  f.input.set({ ...original, phase: 'sending' })
+  const undo = f.tracker.undo(f.tracker.active(), true, messages)
+  f.input.set(original)
+  await undo
+  assert.equal(f.input.getSnapshot().draft, 'sent text')
+  assert.deepEqual(f.removals, [])
+  assert.deepEqual(f.notices, [['info', 'restored']])
+  f.state.set({ running: true, pendingSubmissions: [] })
+  f.input.set({ ...original, phase: 'sending' })
+  assert.equal(f.tracker.active(), undefined)
+  f.dispose()
 })

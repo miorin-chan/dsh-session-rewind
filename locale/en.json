@@ -1,6 +1,6 @@
 {
   "meta": {
     "title": "Left Unsaid",
-    "description": "Use the undo arrow below a pending message above the composer to withdraw it before the agent takes it."
+    "description": "Return a directly sent message to the draft while waiting for the assistant’s reply."
   }
 }

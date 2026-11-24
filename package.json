@@ -3,14 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "license": "MIT",
-  "description": "Withdraw a pending message with the undo arrow below it.",
+  "description": "Return a directly sent message to the draft while awaiting a reply.",
   "type": "module",
   "keywords": [
     "deepseek-harness",
     "dsh",
     "dsh-plugin",
-    "undo-send",
-    "queue"
+    "undo-send"
   ],
   "exports": {
     ".": "./index.js",
@@ -27,6 +26,7 @@
     "README.md",
     "AGENTS.md",
     "AGENTS.local.md",
+    "DESIGN.md",
     "docs/README.md",
     "README.zh.md"
   ],
@@ -66,12 +66,14 @@
     "@deepseek-ai/dsh-client-locale": "0.2.2-rc.5",
     "@deepseek-ai/dsh-client-ui-chat": "0.2.2-rc.5",
     "@deepseek-ai/dsh-client-ui-conversation": "0.2.2-rc.5",
+    "@deepseek-ai/dsh-client-ui-primitives": "0.2.2-rc.5",
     "@deepseek-ai/dsh-client-ui-renderer": "0.2.2-rc.5",
     "@deepseek-ai/dsh-client-ui-session": "0.2.2-rc.5",
     "@deepseek-ai/dsh-client-ui-slots": "0.2.2-rc.5",
     "@deepseek-ai/dsh-llm": "0.2.2-rc.5",
     "@types/node": "22.20.5",
     "@types/react": "18.3.31",
+    "@types/react-dom": "18.3.7",
     "esbuild": "0.28.2",
     "react": "18.3.1",
     "typescript": "5.7.3"
