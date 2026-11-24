@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Desfazer envio",
+    "description": "Use a seta abaixo de uma mensagem pendente para retirá-la antes que o agente a receba."
+  }
+}
