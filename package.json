@@ -26,8 +26,10 @@
     "README.md",
     "AGENTS.md",
     "AGENTS.local.md",
+    "DESIGN.md",
     "docs/README.md",
-    "README.zh.md"
+    "README.zh.md",
+    "lib"
   ],
   "engines": {
     "dsh": "0.2.2-rc.5"

@@ -14,6 +14,8 @@ Check whether new behavior belongs in its own bundle.
 
 - `README.md` is for users: installation, usage, commands, and limits.
   Provide `README.zh.md` as its Chinese version.
+- [DESIGN.md](DESIGN.md) defines the rewind product behavior, multimedia restoration, and confirmation rules.
+  Keep implementation status, schedules, and debugging notes out of it.
 - `CHANGELOG.md` records changes for developers.
 - Keep design records, proposals, and verification evidence under `docs/`, with `docs/README.md` as the index.
 - Keep the plugin detail page short.
