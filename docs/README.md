@@ -17,6 +17,6 @@
 
 - `npm test` 构建运行入口并测试注册清理、队列去重、附件和错误输入。
 - `npm run check` 检查测试、类型、构建产物以及运行版本。
-- 从工作区根运行 `node tools/new-dsh-plugin/cli.mts --check plugins/dsh-undo-send` 校验插件骨架。
+- 从工作区根运行 `node tools/new-dsh-plugin/cli.mts --check plugins/dsh-undo-unsent` 校验插件骨架。
 - 一次性 DSH profile 的 Chrome 对照验证覆盖排队编辑、单条撤销、等待插话、文件卡和模型请求。
 - 1440 px 与 390 px 的页面均核对了按钮位置、点击和键盘焦点，390 px 使用触控模拟。

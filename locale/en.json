@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "Undo send",
+    "title": "Undo unsent",
     "description": "Use the undo arrow below a pending message above the composer to withdraw it before the agent takes it."
   }
 }

@@ -4,7 +4,7 @@ import test from 'node:test'
 import { pendingRows, rowKey } from '../src/client/rows.ts'
 
 const requireModule = createRequire(import.meta.url)
-const namespace = 'dsh-undo-send'
+const namespace = 'dsh-undo-unsent'
 
 await test('loaded artifact registers the queue slot and disposes it on unload', async () => {
   let registration
@@ -14,7 +14,7 @@ await test('loaded artifact registers the queue slot and disposes it on unload',
   } finally {
     delete globalThis.window
   }
-  assert.equal(registration.id, '@miorin/dsh-undo-send')
+  assert.equal(registration.id, '@miorin/dsh-undo-unsent')
   const plugin = registration.factory(requireModule)
   assert.deepEqual(plugin.inject, ['slots', 'locale', 'sessions', 'conversation', 'uiConversation'])
 

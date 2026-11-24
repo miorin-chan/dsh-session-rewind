@@ -1,5 +1,5 @@
 {
-  "name": "@miorin/dsh-undo-send",
+  "name": "@miorin/dsh-undo-unsent",
   "version": "0.1.0",
   "private": true,
   "license": "MIT",

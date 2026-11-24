@@ -1,5 +1,5 @@
 # Activates the bundle. The Host half is inert; the Client half ships through
-# package.json `dsh.client` and carries Undo send.
+# package.json `dsh.client` and carries Undo unsent.
 - insert:
-    - id: dsh-undo-send
-      name: '@miorin/dsh-undo-send'
+    - id: dsh-undo-unsent
+      name: '@miorin/dsh-undo-unsent'

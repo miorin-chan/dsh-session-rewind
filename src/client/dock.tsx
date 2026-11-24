@@ -10,11 +10,11 @@ import type { labels } from './labels.js'
 import { styles } from './styles.js'
 
 export const dockSlot = 'conversation.input.dock'
-export const namespace = 'dsh-undo-send'
+export const namespace = 'dsh-undo-unsent'
 
 declare module '@deepseek-ai/dsh-client-ui-slots' {
   interface LocaleNamespaceMap {
-    'dsh-undo-send': keyof typeof labels.en
+    'dsh-undo-unsent': keyof typeof labels.en
   }
 }
 
@@ -89,7 +89,7 @@ function PendingList({ rows, session, canUpdate, ...props }: DockProps & {
   return (
     <>
       <style>{styles}</style>
-      {rows.length > 0 && <div className="dsh-undo-send" data-dsh-undo-send data-queue-dock="">
+      {rows.length > 0 && <div className="dsh-undo-unsent" data-dsh-undo-unsent data-queue-dock="">
         <div className="dsh-undo-heading" aria-hidden="true">{props.t('pending')}</div>
         <ul ref={list} aria-label={props.t('pending')} className="dsh-undo-list">
           {rows.map(row => <PendingMessage key={rowKey(row)} row={row} canUpdate={canUpdate}

@@ -21,7 +21,7 @@ export const styles = `
   background: var(--dsw-alias-bg-layer-2);
   font-size: var(--dsh-content-font-size-secondary, 13px);
 }
-.dsh-undo-send {
+.dsh-undo-unsent {
   box-sizing: border-box;
   width: min(calc(100% - 2 * var(--dsh-composer-side-clearance, 16px)), var(--dsh-composer-card-max-width, 748px));
   flex: none;
