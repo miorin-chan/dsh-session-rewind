@@ -40,12 +40,13 @@ Check whether new behavior belongs in its own bundle.
   For TypeScript plugins, use the workspace TypeScript base.
   Put Host, Client, and private module sources under `src/host/`, `src/client/`, and `src/lib/` as needed.
   `npm run build:tools` compiles `scripts/*.mts` to adjacent `.mjs` files for the build and version checks.
-  The build generates `client.js` and `index.js` from the TypeScript entries.
+  The build generates `client.js`, `index.js`, and `lib/rewind-host.js` from the TypeScript entries.
   Git ignores the generated files.
   Include the runtime files in the npm package.
 - Keep Plugin Manager metadata in `locale/*.json`.
 - Node.js 22.18 or newer runs the `.test.mts` files directly.
-  The client test uses a fake `ctx` to check registration, resources, and cleanup.
+  The host test exercises `index.js` and `lib/rewind-host.js`; the client test uses a fake `ctx` to check registration,
+  resources, controller logic, and cleanup.
 - `docs/scripts/reflow` is the standalone documentation formatter and requires Python 3.11 or newer.
 
 ## Reusing native DSH UI
