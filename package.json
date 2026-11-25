@@ -1,7 +1,6 @@
 {
   "name": "@miorin/dsh-session-rewind",
   "version": "0.1.0",
-  "private": true,
   "license": "MIT",
   "description": "Rewind to an earlier message, restore its text and attachments to the composer, and archive the original conversation.",
   "type": "module",
@@ -93,5 +92,17 @@
     "esbuild": "0.28.2",
     "react": "18.3.1",
     "typescript": "5.7.3"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/miorin-chan/dsh-session-rewind.git"
+  },
+  "homepage": "https://github.com/miorin-chan/dsh-session-rewind#readme",
+  "bugs": {
+    "url": "https://github.com/miorin-chan/dsh-session-rewind/issues"
   }
 }
