@@ -277,11 +277,20 @@ export function ComposerAttachmentRestorer(
             && (fileInput.files?.length ?? 0) > 0
           ) {
             fileInput.value = ''
-            document.dispatchEvent(new ClipboardEvent('paste', {
-              clipboardData: transfer,
-              cancelable: true,
-              bubbles: true,
-            }))
+            const composerInput = card?.querySelector<HTMLElement>('[data-composer-input]') ?? null
+            if (composerInput !== null && composerInput.isConnected) {
+              composerInput.dispatchEvent(new ClipboardEvent('paste', {
+                clipboardData: transfer,
+                cancelable: true,
+                bubbles: true,
+              }))
+            } else if (card?.contains(document.activeElement) === true) {
+              document.dispatchEvent(new ClipboardEvent('paste', {
+                clipboardData: transfer,
+                cancelable: true,
+                bubbles: true,
+              }))
+            }
           }
           sessionInput.focus()
         }, 0)

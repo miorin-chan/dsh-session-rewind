@@ -81,7 +81,10 @@ export interface RewindControllerSnapshot {
 
 export interface RewindControllerDeps {
   readonly fetch?: typeof fetch
+  readonly pendingFilesTtlMs?: number
 }
+
+const DEFAULT_PENDING_FILES_TTL_MS = 60_000
 
 type ExecuteOutcome =
   | {
@@ -136,8 +139,10 @@ export function createRewindController(
   deps: RewindControllerDeps = {},
 ) {
   const fetchImpl = deps.fetch ?? globalThis.fetch.bind(globalThis)
+  const pendingFilesTtlMs = deps.pendingFilesTtlMs ?? DEFAULT_PENDING_FILES_TTL_MS
   const listeners = new Set<() => void>()
   const pendingFiles = new Map<SessionId, readonly File[]>()
+  const pendingFileTimers = new Map<SessionId, ReturnType<typeof setTimeout>>()
   let revision = 0
   let toastSeq = 0
   let busySessionId: SessionId | null = null
@@ -150,7 +155,31 @@ export function createRewindController(
     toast,
   }
 
+  function clearPendingFiles(targetId: SessionId): void {
+    const timer = pendingFileTimers.get(targetId)
+    if (timer !== undefined) {
+      clearTimeout(timer)
+      pendingFileTimers.delete(targetId)
+    }
+    pendingFiles.delete(targetId)
+  }
+
+  function setPendingFiles(targetId: SessionId, files: readonly File[]): void {
+    clearPendingFiles(targetId)
+    pendingFiles.set(targetId, files)
+    if (pendingFilesTtlMs > 0) {
+      const timer = setTimeout(() => {
+        pendingFileTimers.delete(targetId)
+        if (pendingFiles.delete(targetId)) publish()
+      }, pendingFilesTtlMs)
+      ;(timer as { unref?: () => void }).unref?.()
+      pendingFileTimers.set(targetId, timer)
+    }
+  }
+
   lifetime.addEventListener('abort', () => {
+    for (const timer of pendingFileTimers.values()) clearTimeout(timer)
+    pendingFileTimers.clear()
     pendingFiles.clear()
   }, { once: true })
 
@@ -334,7 +363,7 @@ export function createRewindController(
           }
         }
         if (files.length > 0) {
-          pendingFiles.set(childId, files)
+          setPendingFiles(childId, files)
           publish()
         }
         if (wasPinned) {
@@ -351,7 +380,7 @@ export function createRewindController(
         }
       })
     } catch (error: unknown) {
-      pendingFiles.delete(childId)
+      clearPendingFiles(childId)
       return { ok: false, stage: 'before-switch', message: errorMessageOf(error) }
     }
 
@@ -571,7 +600,7 @@ export function createRewindController(
     peekPendingFiles: (sessionId: SessionId) => pendingFiles.get(sessionId),
     takePendingFiles(sessionId: SessionId) {
       const files = pendingFiles.get(sessionId)
-      if (files !== undefined) pendingFiles.delete(sessionId)
+      if (files !== undefined) clearPendingFiles(sessionId)
       return files
     },
   }

@@ -704,3 +704,27 @@ test('handles attachment failures, fork/archive failures, unarchive failures, an
   assert.equal(archiveErrHarness.controller.getSnapshot().toast.kind, 'archiveFailed')
   archiveErrHarness.dispose()
 })
+
+test('expires stale pendingFiles after pendingFilesTtlMs when composer never mounts', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout'] })
+  const bytes = new Uint8Array([1, 2, 3]).buffer
+  const ttlHarness = makeHarness({
+    createImpl: async () => 's-ttl',
+    async fetchImpl() { return Response.json({ boundary: { kind: 'create' }, activity: [] }) },
+    async readAttachmentImpl(ref) {
+      return {
+        ok: true,
+        value: { data: bytes, attachment: { attachmentId: ref.attachmentId, mediaType: 'image/png', name: 'ttl.png' } },
+      }
+    },
+  })
+  await ttlHarness.controller.requestRewind('s-1', userNode({
+    turn: 1,
+    seq: 2,
+    content: [{ type: 'image', attachment: { attachmentId: 'img-ttl', mediaType: 'image/png' } }],
+  }))
+  assert.equal(ttlHarness.controller.peekPendingFiles('s-ttl')?.length, 1)
+  t.mock.timers.tick(60_000)
+  assert.equal(ttlHarness.controller.peekPendingFiles('s-ttl'), undefined)
+  ttlHarness.dispose()
+})
