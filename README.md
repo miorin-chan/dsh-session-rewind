@@ -7,7 +7,7 @@ before that turn, restore the message text and multimedia attachments into the n
 and archive the original conversation with a one-click **Unarchive** toast.
 Rewind runs immediately when idle or when only a turn is running; if subagents, background jobs,
 or scheduled reminders are active, a confirmation dialog lists them before branching.
-See [the design specification](DESIGN.md) for exact rules and edge cases.
+See the [product design](DESIGN.md) for expected behavior and edge cases.
 
 `@miorin/dsh-session-rewind` supports DeepSeek Harness 0.2.2-rc.5.
 To install from source, run `npm ci` in the checkout, then select the checkout in **Plugins** > **Add plugin**.

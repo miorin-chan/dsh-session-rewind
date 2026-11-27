@@ -1,19 +1,8 @@
 # 项目文档
 
-[简体中文使用说明](../README.zh.md) · [English README](../README.md) · [产品与实现设计](../DESIGN.md)
-
-## 架构概览
-
-- **Host 侧（`src/host/index.ts`、`src/lib/rewind-host.ts`）**：注入 `connection`、`attachments` 与 `sessionQuery`，
-  通过 `ctx.connection.fetch` 暴露受鉴权只读路由 `/api/dsh-session-rewind/prepare` 与 `/api/dsh-session-rewind/file`，
-  用于计算精确分叉边界、查询 `workspace/session-activity`，
-  并在校验消息归属与索引后通过 `ctx.attachments.readFileStream` 流式读取普通文件附件。
-- **Client 侧（`src/client/`）**：
-  - `conversation.chat.user.before`（`priority: 100`）：为持久化普通用户消息在原生复制按钮左侧挂载回退图标按钮，
-    复用原生操作行样式，排除 `steering`、局部发送回显、子代理会话与已归档会话。
-  - `conversation.input.right`：在切换并聚焦新会话的输入框卡片后，
-    将恢复的图片与普通文件 `File[]` 注入原生多文件控件（必要时回退剪贴板粘贴），复用宿主预览与上传链路。
-  - `shell.overlay`：渲染带一键 **取消归档** 的原生 Toast，以及仅在存在非回合活跃工作或归档被拒时显示的原生确认框。
+- [产品设计](../DESIGN.md)：问题、目标体验与成功标准。
+- [实现说明](IMPLEMENTATION.md)：宿主接入、会话边界与附件恢复机制。
+- [简体中文使用说明](../README.zh.md) · [English README](../README.md)
 
 ## 验证
 

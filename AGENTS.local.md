@@ -14,10 +14,13 @@ Check whether new behavior belongs in its own bundle.
 
 - `README.md` is for users: installation, usage, commands, and limits.
   Provide `README.zh.md` as its Chinese version.
-- [DESIGN.md](DESIGN.md) defines the rewind product behavior, multimedia restoration, and confirmation rules.
-  Keep implementation status, schedules, and debugging notes out of it.
-- `CHANGELOG.md` records changes for developers.
-- Keep design records, proposals, and verification evidence under `docs/`, with `docs/README.md` as the index.
+- [DESIGN.md](DESIGN.md) defines the product problem, intended rewind experience, and observable success criteria.
+  Read it before changing product behavior.
+  Update it with approved product decisions when closing a task.
+- Find the [implementation notes](docs/IMPLEMENTATION.md) and the results of actual verification
+  through the [documentation index](docs/README.md).
+  Keep schedules and debugging notes in task records.
+- `CHANGELOG.md` records changes by version.
 - Keep the plugin detail page short.
   Set `meta.title` and `meta.description` in `locale/*.json` for the DSH interface language.
   Use `meta.detail` in each locale to select a short, packaged Markdown document when needed.
