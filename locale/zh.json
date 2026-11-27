@@ -1,6 +1,7 @@
 {
   "meta": {
     "title": "君子未言",
-    "description": "回退到先前发送的消息，将正文和附件放回输入框，并归档原会话。"
+    "description": "回退到先前发送的消息，将正文和附件放回输入框，并归档原会话。",
+    "detail": "docs/DETAIL.zh.md"
   }
 }

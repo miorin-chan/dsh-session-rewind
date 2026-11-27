@@ -10,4 +10,13 @@
 `@miorin/dsh-session-rewind` 支持 DeepSeek Harness 0.2.2-rc.5。
 在源码目录执行 `npm ci` 完成构建后，从 **插件** > **添加插件** 选择该目录。
 
+## 界面与入口
+
+在「复制」旁点击「回退」。回退完成后，轻提示提供「取消归档」入口。
+
+| | 浅色 | 深色 |
+| --- | --- | --- |
+| 归档提示 | ![回退后的归档提示与取消归档入口（浅色）](docs/assets/screenshots/main-light.png) | ![回退后的归档提示与取消归档入口（深色）](docs/assets/screenshots/main-dark.png) |
+| 消息操作入口 | ![用户消息下方与复制并列的回退按钮（浅色）](docs/assets/screenshots/entry-light.png) | ![用户消息下方与复制并列的回退按钮（深色）](docs/assets/screenshots/entry-dark.png) |
+
 [项目文档](docs/README.md)
