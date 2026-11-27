@@ -1,6 +1,7 @@
 {
   "meta": {
     "title": "Left Unsaid",
-    "description": "Rewind to an earlier message, restore its text and attachments to the composer, and archive the original conversation."
+    "description": "Rewind to an earlier message, restore its text and attachments to the composer, and archive the original conversation.",
+    "detail": "docs/DETAIL.md"
   }
 }

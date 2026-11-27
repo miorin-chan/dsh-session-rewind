@@ -10,7 +10,7 @@ or scheduled reminders are active, a confirmation dialog lists them before branc
 See the [product design](DESIGN.md) for expected behavior and edge cases.
 
 `@miorin/dsh-session-rewind` supports DeepSeek Harness 0.2.2-rc.5.
-To install from source, run `npm ci` in the checkout, then select the checkout in **Plugins** > **Add plugin**.
+To install from source, run `pnpm install` in the checkout, then select the checkout in **Plugins** > **Add plugin**.
 
 ## Screenshots and entry
 

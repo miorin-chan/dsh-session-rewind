@@ -8,7 +8,7 @@
 回退的适用范围与预期体验见[产品设计](DESIGN.md)。
 
 `@miorin/dsh-session-rewind` 支持 DeepSeek Harness 0.2.2-rc.5。
-在源码目录执行 `npm ci` 完成构建后，从 **插件** > **添加插件** 选择该目录。
+在源码目录执行 `pnpm install` 完成构建后，从 **插件** > **添加插件** 选择该目录。
 
 ## 界面与入口
 
