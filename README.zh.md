@@ -12,11 +12,11 @@
 
 ## 界面与入口
 
-在「复制」旁点击「回退」。回退完成后，轻提示提供「取消归档」入口。
+在「复制」旁点击「回退」。回退完成后，消息正文回到输入框，顶部轻提示提供「取消归档」入口。
 
 | | 浅色 | 深色 |
 | --- | --- | --- |
-| 归档提示 | ![回退后的归档提示与取消归档入口（浅色）](docs/assets/screenshots/main-light.png) | ![回退后的归档提示与取消归档入口（深色）](docs/assets/screenshots/main-dark.png) |
+| 回退结果 | ![回退后的对话界面，输入框恢复原草稿且顶部显示取消归档提示（浅色）](docs/assets/screenshots/main-light.png) | ![回退后的对话界面，输入框恢复原草稿且顶部显示取消归档提示（深色）](docs/assets/screenshots/main-dark.png) |
 | 消息操作入口 | ![用户消息下方与复制并列的回退按钮（浅色）](docs/assets/screenshots/entry-light.png) | ![用户消息下方与复制并列的回退按钮（深色）](docs/assets/screenshots/entry-dark.png) |
 
 [项目文档](docs/README.md)

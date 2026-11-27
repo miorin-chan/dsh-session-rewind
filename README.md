@@ -14,12 +14,13 @@ To install from source, run `pnpm install` in the checkout, then select the chec
 
 ## Screenshots and entry
 
-Use **Rewind** next to **Copy**. After rewinding, the notice offers to unarchive the original conversation.
+Use **Rewind** next to **Copy**.
+After rewinding, the message text returns to the composer and the notice offers to unarchive the original conversation.
 The screenshots show the Chinese interface.
 
 | | Light | Dark |
 | --- | --- | --- |
-| Archive notice | ![Rewind notice with an action to unarchive the original conversation in the light theme](docs/assets/screenshots/main-light.png) | ![Rewind notice with an action to unarchive the original conversation in the dark theme](docs/assets/screenshots/main-dark.png) |
+| After rewind | ![Rewound conversation with restored draft in the composer and unarchive notice in the light theme](docs/assets/screenshots/main-light.png) | ![Rewound conversation with restored draft in the composer and unarchive notice in the dark theme](docs/assets/screenshots/main-dark.png) |
 | Message action | ![Rewind beside Copy under a user message in the light theme](docs/assets/screenshots/entry-light.png) | ![Rewind beside Copy under a user message in the dark theme](docs/assets/screenshots/entry-dark.png) |
 
 [Project documentation](docs/README.md)

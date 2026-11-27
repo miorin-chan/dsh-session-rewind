@@ -1,4 +1,4 @@
-![Rewind notice with an action to unarchive the original conversation (Chinese interface)](assets/screenshots/main-light.png)
+![Rewound conversation with restored draft in the composer and unarchive notice (Chinese interface)](assets/screenshots/main-light.png)
 
 Click Rewind beside Copy under any ordinary user message to restore its text and attachments
 to a new session's composer.
